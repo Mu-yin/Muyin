@@ -135,6 +135,37 @@ async function initDB() {
     )
   `)
 
+  _db.exec(`
+    CREATE TABLE IF NOT EXISTS bookmarks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      post_id INTEGER NOT NULL,
+      ip_address TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(post_id, ip_address),
+      FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+    )
+  `)
+
+  _db.exec(`
+    CREATE TABLE IF NOT EXISTS profile (
+      id INTEGER PRIMARY KEY DEFAULT 1,
+      avatar TEXT DEFAULT '',
+      name TEXT DEFAULT 'Muyin',
+      bio TEXT DEFAULT '',
+      interests TEXT DEFAULT '[]',
+      experience TEXT DEFAULT '[]',
+      photos TEXT DEFAULT '[]',
+      contact TEXT DEFAULT '{}',
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
+  // Seed default profile if not exists
+  const existingProfile = _db.prepare('SELECT id FROM profile WHERE id = 1').get()
+  if (!existingProfile) {
+    _db.exec(`INSERT INTO profile (id) VALUES (1)`)
+  }
+
   _db.exec('PRAGMA foreign_keys = ON')
 
   console.log('📦 SQLite 数据库已初始化')

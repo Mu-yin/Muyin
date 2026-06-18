@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
+import BookmarkButton from './BookmarkButton'
 
 function relativeTime(dateStr) {
   const now = new Date()
@@ -96,6 +97,7 @@ export default function PostList() {
                       <span>{relativeTime(post.created_at)}</span>
                       <span>❤️ {post.like_count || 0}</span>
                       <span>💬 {post.comment_count || 0}</span>
+                      <BookmarkButton postId={post.id} />
                     </div>
                   </div>
                 </div>

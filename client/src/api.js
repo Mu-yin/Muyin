@@ -28,6 +28,15 @@ export const api = {
   getLikes: (postId) => request(`/posts/${postId}/likes`),
   toggleLike: (postId) => request(`/posts/${postId}/likes`, { method: 'POST' }),
 
+  // Bookmarks
+  getBookmarks: (postId) => request(`/posts/${postId}/bookmarks`),
+  toggleBookmark: (postId) => request(`/posts/${postId}/bookmarks`, { method: 'POST' }),
+  getBookmarkedPosts: () => request('/bookmarks'),
+
+  // Profile
+  getProfile: () => request('/profile'),
+  updateProfile: (data) => request('/profile', { method: 'PUT', body: JSON.stringify(data) }),
+
   // Upload
   uploadFile: async (file) => {
     const formData = new FormData()

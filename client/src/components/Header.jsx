@@ -15,6 +15,7 @@ export default function Header() {
         <nav className="nav">
           <Link to="/" className="nav-link">首页</Link>
           <Link to="/#posts" className="nav-link">博客</Link>
+          <Link to="/about" className="nav-link">关于</Link>
           <Link to="/admin" className="nav-admin">撰写</Link>
 
           <button

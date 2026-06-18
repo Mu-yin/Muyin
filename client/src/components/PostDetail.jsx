@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { api } from '../api'
-import CommentSection from './CommentSection'
+import GiscusComment from './GiscusComment'
 import LikeButton from './LikeButton'
+import BookmarkButton from './BookmarkButton'
 
 export default function PostDetail() {
   const { id } = useParams()
@@ -55,9 +56,10 @@ export default function PostDetail() {
 
       <div className="post-actions">
         <LikeButton postId={post.id} />
+        <BookmarkButton postId={post.id} />
       </div>
 
-      <CommentSection postId={post.id} />
+      <GiscusComment postTitle={post.title} />
     </article>
   )
 }

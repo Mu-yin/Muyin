@@ -10,6 +10,7 @@ export default function Footer() {
           <h4>导航</h4>
           <a href="/">首页</a>
           <a href="/#posts">文章</a>
+          <a href="/about">关于</a>
           <a href="/admin">撰写</a>
         </div>
         <div className="footer-social">
