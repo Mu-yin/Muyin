@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muyinの博客</title>
+    <meta name="description" content="Muyinの博客 — 记录技术思考与生活感悟" />
+    <meta property="og:title" content="Muyinの博客" />
+    <meta property="og:description" content="Muyinの博客 — 记录技术思考与生活感悟" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        (t === 'dark' || (!t && matchMedia('(prefers-color-scheme:dark)').matches)) &&
+          document.documentElement.classList.add('dark');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

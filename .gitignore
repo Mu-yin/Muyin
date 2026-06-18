@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+client/dist/
+
+# Database (local)
+server/blog.db
+
+# Uploaded files (local dev)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
