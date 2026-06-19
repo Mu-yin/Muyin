@@ -2,7 +2,7 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 
 const router = Router()
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'muyin2024'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Yxfl0316'
 const JWT_SECRET = process.env.JWT_SECRET || 'muyin-blog-secret-key-2024'
 
 // 登录
