@@ -3,6 +3,7 @@ import multer from 'multer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
+import { requireAuth } from '../middleware/auth.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const UPLOADS_DIR = path.join(__dirname, '..', 'uploads')
@@ -43,7 +44,8 @@ const upload = multer({
 
 const router = Router()
 
-router.post('/', (req, res) => {
+// 上传文件 (需要登录)
+router.post('/', requireAuth, (req, res) => {
   upload.single('file')(req, res, (err) => {
     if (err) {
       if (err instanceof multer.MulterError) {

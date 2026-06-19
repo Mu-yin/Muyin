@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useTheme } from '../App'
+import { useAuth } from '../AuthContext'
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
+  const { authenticated, logout } = useAuth()
 
   return (
     <header className="header">
@@ -16,7 +18,15 @@ export default function Header() {
           <Link to="/" className="nav-link">首页</Link>
           <Link to="/#posts" className="nav-link">博客</Link>
           <Link to="/about" className="nav-link">关于</Link>
-          <Link to="/admin" className="nav-admin">撰写</Link>
+
+          {authenticated ? (
+            <>
+              <Link to="/admin" className="nav-admin">撰写</Link>
+              <button onClick={logout} className="nav-link nav-logout" title="退出登录">退出</button>
+            </>
+          ) : (
+            <Link to="/login" className="nav-link">登录</Link>
+          )}
 
           <button
             className="theme-toggle"

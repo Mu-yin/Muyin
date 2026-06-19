@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import db from '../db.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -18,8 +19,8 @@ router.get('/', (req, res) => {
   })
 })
 
-// PUT profile (update)
-router.put('/', (req, res) => {
+// PUT profile (需要登录)
+router.put('/', requireAuth, (req, res) => {
   const { avatar, name, bio, interests, experience, photos, contact } = req.body
 
   db.prepare(`

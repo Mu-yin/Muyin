@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import db from '../db.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -29,8 +30,8 @@ router.get('/:id', (req, res) => {
   res.json(post)
 })
 
-// CREATE post
-router.post('/', (req, res) => {
+// CREATE post (需要登录)
+router.post('/', requireAuth, (req, res) => {
   const { title, content, tags, image_url } = req.body
   if (!title || !content) {
     return res.status(400).json({ error: '标题和内容不能为空' })
@@ -42,8 +43,8 @@ router.post('/', (req, res) => {
   res.status(201).json(post)
 })
 
-// UPDATE post
-router.put('/:id', (req, res) => {
+// UPDATE post (需要登录)
+router.put('/:id', requireAuth, (req, res) => {
   const { title, content, tags, image_url } = req.body
   const existing = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id)
   if (!existing) return res.status(404).json({ error: '文章不存在' })
@@ -63,8 +64,8 @@ router.put('/:id', (req, res) => {
   res.json(updated)
 })
 
-// DELETE post
-router.delete('/:id', (req, res) => {
+// DELETE post (需要登录)
+router.delete('/:id', requireAuth, (req, res) => {
   const existing = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id)
   if (!existing) return res.status(404).json({ error: '文章不存在' })
 

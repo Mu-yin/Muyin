@@ -1,8 +1,13 @@
 const BASE = '/api'
 
+function getAuthHeaders() {
+  const token = localStorage.getItem('admin_token')
+  return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
 async function request(url, options = {}) {
   const res = await fetch(`${BASE}${url}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: { 'Content-Type': 'application/json', ...getAuthHeaders(), ...options.headers },
     ...options,
   })
   if (!res.ok) {
@@ -41,7 +46,11 @@ export const api = {
   uploadFile: async (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    const res = await fetch(`${BASE}/upload`, { method: 'POST', body: formData })
+    const res = await fetch(`${BASE}/upload`, {
+      method: 'POST',
+      body: formData,
+      headers: getAuthHeaders(),
+    })
     if (!res.ok) throw new Error('Upload failed')
     return res.json()
   },

@@ -9,6 +9,7 @@ import likesRouter from './routes/likes.js'
 import uploadRouter from './routes/upload.js'
 import profileRouter from './routes/profile.js'
 import bookmarksRouter from './routes/bookmarks.js'
+import authRouter from './routes/auth.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -29,6 +30,7 @@ app.use('/api/posts', bookmarksRouter)
 app.use('/api/bookmarks', bookmarksRouter)
 app.use('/api/upload', uploadRouter)
 app.use('/api/profile', profileRouter)
+app.use('/api/auth', authRouter)
 
 // Health check
 app.get('/api/health', (req, res) => {
