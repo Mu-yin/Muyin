@@ -19,13 +19,9 @@ export default function Header() {
           <Link to="/#posts" className="nav-link">博客</Link>
           <Link to="/about" className="nav-link">关于</Link>
 
-          {authenticated ? (
-            <>
-              <Link to="/admin" className="nav-admin">撰写</Link>
-              <button onClick={logout} className="nav-link nav-logout" title="退出登录">退出</button>
-            </>
-          ) : (
-            <Link to="/login" className="nav-link">登录</Link>
+          <Link to="/admin" className="nav-admin">撰写</Link>
+          {authenticated && (
+            <button onClick={logout} className="nav-link nav-logout" title="退出登录">退出</button>
           )}
 
           <button

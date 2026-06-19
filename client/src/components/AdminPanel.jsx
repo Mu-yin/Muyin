@@ -1,8 +1,55 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { useAuth } from '../AuthContext'
 import FileUpload from './FileUpload'
 
+function LoginForm() {
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!password.trim()) return
+    setLoading(true)
+    setError('')
+    try {
+      await login(password.trim())
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="login-page">
+      <div className="login-card">
+        <h1 className="login-title">🔐 管理员登录</h1>
+        <p className="login-desc">请输入密码以管理博客内容</p>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            type="password"
+            className="form-input login-input"
+            placeholder="请输入管理员密码"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoFocus
+            required
+          />
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit" className="btn btn-primary login-btn" disabled={loading}>
+            {loading ? '验证中...' : '登录'}
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 export default function AdminPanel() {
+  const { authenticated, loading: authLoading } = useAuth()
   const [tab, setTab] = useState('posts')
   const [posts, setPosts] = useState([])
   const [title, setTitle] = useState('')
@@ -24,7 +71,7 @@ export default function AdminPanel() {
     api.getProfile().then(p => { setProfile(p); setProfileLoaded(true) }).catch(console.error)
   }
 
-  useEffect(() => { loadPosts(); loadProfile() }, [])
+  useEffect(() => { if (authenticated) { loadPosts(); loadProfile() } }, [authenticated])
 
   const resetForm = () => {
     setTitle('')
@@ -108,6 +155,17 @@ export default function AdminPanel() {
     })
   }
 
+  // 加载中
+  if (authLoading) {
+    return <div className="loading">加载中...</div>
+  }
+
+  // 未登录 → 显示登录框
+  if (!authenticated) {
+    return <LoginForm />
+  }
+
+  // 已登录 → 显示管理面板
   return (
     <div className="admin-panel">
       <h1 className="page-title">管理后台</h1>
